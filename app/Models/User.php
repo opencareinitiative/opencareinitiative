@@ -9,14 +9,18 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Filament\Models\Contracts\HasName;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements HasName
 {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -59,4 +63,15 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+    
+    /**
+   * Get the user's full name for filament admin
+   *
+   * @return string
+   */ 
+   
+    public function getFilamentName(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
 }
