@@ -70,6 +70,11 @@ class User extends Authenticatable implements HasName
    * @return string
    */ 
    
+    public function getFullNameAttribute()
+    {
+    return "{$this->first_name} {$this->last_name}";
+    }
+   
     public function getFilamentName(): string
     {
         return "{$this->first_name} {$this->last_name}";
