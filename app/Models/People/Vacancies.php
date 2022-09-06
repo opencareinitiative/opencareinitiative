@@ -7,11 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Core\Locations;
 use App\Models\User;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Vacancies extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use Vacancies;
+    
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['*']);
+    }
     
     protected $fillable = [
         'status',

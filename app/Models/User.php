@@ -11,6 +11,8 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Filament\Models\Contracts\HasName;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 
 class User extends Authenticatable implements HasName
@@ -21,6 +23,13 @@ class User extends Authenticatable implements HasName
     use Notifiable;
     use TwoFactorAuthenticatable;
     use SoftDeletes;
+    use LogsActivity;
+    
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['*']);
+    }
 
     /**
      * The attributes that are mass assignable.
